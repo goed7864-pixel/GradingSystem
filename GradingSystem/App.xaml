@@ -1,0 +1,17 @@
+﻿<Application x:Class="GradingSystem.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:GradingSystem"
+             StartupUri="Pages/login.xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/Styles/Colors.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/Styles/buttonStyles.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/Styles/textBoxStyles.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/Styles/windowStyles.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/Styles/cardStyles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

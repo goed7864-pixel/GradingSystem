@@ -1,0 +1,241 @@
+<Page x:Class="GradingSystem.Pages.AssignmentsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      mc:Ignorable="d"
+      d:DesignHeight="700" d:DesignWidth="1200"
+      Title="AssignmentsPage"
+      Background="#F5F5F5">
+
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Styles/cardStyles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+            <Style x:Key="AssignmentCellStyle" TargetType="Border">
+                <Setter Property="Width" Value="70"/>
+                <Setter Property="Height" Value="70"/>
+                <Setter Property="Margin" Value="4"/>
+                <Setter Property="CornerRadius" Value="10"/>
+                <Setter Property="Cursor" Value="Hand"/>
+            </Style>
+
+            <DataTemplate x:Key="AssignmentCellTemplate">
+                <Border Style="{StaticResource AssignmentCellStyle}" Background="{Binding BackgroundColor}" MouseLeftButtonDown="AssignmentCell_Click" Tag="{Binding}">
+                    <Grid>
+                        <TextBlock Text="{Binding Icon}" FontSize="28" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="{Binding IconOpacity}"/>
+                        <Border Background="#000000" CornerRadius="8" Padding="6,2" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,0,0,5" Opacity="0.8">
+                            <TextBlock Text="{Binding Points}" FontSize="10" Foreground="White" FontWeight="Bold"/>
+                        </Border>
+                    </Grid>
+                </Border>
+            </DataTemplate>
+        </ResourceDictionary>
+    </Page.Resources>
+
+    <Grid Margin="25,20">
+        <Border Background="White" CornerRadius="20" Padding="0">
+            <Border.Effect>
+                <DropShadowEffect Color="#000000" Opacity="0.06" BlurRadius="15" ShadowDepth="3"/>
+            </Border.Effect>
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <Border Grid.Row="0" Background="#5ED0BA" CornerRadius="20,20,0,0" Padding="25">
+                    <StackPanel>
+                        <TextBlock Text="Проверка заданий" FontSize="22" FontWeight="Bold" Foreground="White"/>
+                        <TextBlock x:Name="SubtitleText" FontSize="13" Foreground="White" Opacity="0.9" Margin="0,5,0,0"/>
+                    </StackPanel>
+                </Border>
+
+                <Border Grid.Row="1" Background="#FAFAFA" Padding="20" BorderBrush="#EEEEEE" BorderThickness="0,0,0,1">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="15"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="15"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Border Grid.Column="0" Background="White" CornerRadius="12" Padding="12" BorderBrush="#E0E0E0" BorderThickness="1">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <ComboBox x:Name="CourseComboBox" Grid.Column="1" Background="Transparent" BorderThickness="0" FontSize="14" SelectionChanged="CourseComboBox_SelectionChanged">
+                                    <ComboBoxItem Content="Выберите курс" IsSelected="True"/>
+                                </ComboBox>
+                            </Grid>
+                        </Border>
+
+                        <Border Grid.Column="2" Background="White" CornerRadius="12" Padding="12" BorderBrush="#E0E0E0" BorderThickness="1">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                             
+                                <ComboBox x:Name="GroupComboBox" Grid.Column="1" Background="Transparent" BorderThickness="0" FontSize="14" SelectionChanged="GroupComboBox_SelectionChanged">
+                                    <ComboBoxItem Content="Выберите группу" IsSelected="True"/>
+                                </ComboBox>
+                            </Grid>
+                        </Border>
+
+                        <Border Grid.Column="4" Background="White" CornerRadius="12" Padding="12" BorderBrush="#E0E0E0" BorderThickness="1">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                 
+                                <ComboBox x:Name="AssignmentComboBox" Grid.Column="1" Background="Transparent" BorderThickness="0" FontSize="14" SelectionChanged="AssignmentComboBox_SelectionChanged">
+                                    <ComboBoxItem Content="Выберите задание" IsSelected="True"/>
+                                </ComboBox>
+                            </Grid>
+                        </Border>
+                    </Grid>
+                </Border>
+
+                <Border Grid.Row="2" Background="White" Padding="20,15" BorderBrush="#EEEEEE" BorderThickness="0,0,0,1">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Border Background="#EF5350" Width="20" Height="20" CornerRadius="5" Margin="0,0,8,0"/>
+                        <TextBlock Text="Не сдано" FontSize="12" Foreground="#666" Margin="0,0,25,0"/>
+
+                        <Border Background="#FFB74D" Width="20" Height="20" CornerRadius="5" Margin="0,0,8,0"/>
+                        <TextBlock Text="Ожидает проверки" FontSize="12" Foreground="#666" Margin="0,0,25,0"/>
+
+                        <Border Background="#66BB6A" Width="20" Height="20" CornerRadius="5" Margin="0,0,8,0"/>
+                        <TextBlock Text="Проверено" FontSize="12" Foreground="#666" Margin="0,0,25,0"/>
+
+                      
+                    </StackPanel>
+                </Border>
+
+                <ScrollViewer Grid.Row="3" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Margin="20">
+                    <Grid>
+                        <Border x:Name="NoDataPanel" Background="#F5F5F5" CornerRadius="15" Padding="50" Visibility="Visible">
+                            <StackPanel HorizontalAlignment="Center">
+                                <TextBlock Text="Выберите курс, группу и задание" FontSize="16" FontWeight="SemiBold" Foreground="#2C3E50" HorizontalAlignment="Center" Margin="0,0,0,5"/>
+                                <TextBlock Text="Для отображения результатов" FontSize="13" Foreground="Gray" HorizontalAlignment="Center"/>
+                            </StackPanel>
+                        </Border>
+
+                        <ItemsControl x:Name="StudentsGrid" Visibility="Collapsed">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Background="#FAFAFA" CornerRadius="12" Padding="15" Margin="0,0,0,8" BorderBrush="#EEEEEE" BorderThickness="1">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="200"/>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="80"/>
+                                                <ColumnDefinition Width="120"/>
+                                                <ColumnDefinition Width="120"/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <StackPanel Grid.Column="0">
+                                                <TextBlock Text="{Binding FullName}" FontSize="14" FontWeight="SemiBold" Foreground="#2C3E50"/>
+                                                <TextBlock Text="{Binding Email}" FontSize="11" Foreground="Gray" Margin="0,3,0,0"/>
+                                            </StackPanel>
+
+                                            <!-- Оценка (показывается только для проверенных) -->
+                                            <Border Grid.Column="2"
+                                                    Background="#E8F5E9"
+                                                    CornerRadius="10"
+                                                    Padding="8,5"
+                                                    HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center">
+                                                <Border.Style>
+                                                    <Style TargetType="Border">
+                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding Status}" Value="green">
+                                                                <Setter Property="Visibility" Value="Visible"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Border.Style>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Image Source="/Icons/star.svg" Width="12" Height="12" Margin="0,0,3,0"/>
+                                                    <TextBlock Text="{Binding Score}" FontSize="13" FontWeight="Bold" Foreground="#4CAF50"/>
+                                                </StackPanel>
+                                            </Border>
+
+                                            <Border Grid.Column="3" Background="{Binding StatusColor}" CornerRadius="15" Padding="10,5" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                <TextBlock Text="{Binding StatusText}" FontSize="11" Foreground="White" FontWeight="SemiBold"/>
+                                            </Border>
+
+                                            <Button Grid.Column="4"
+                                                    Content="Проверить"
+                                                    Background="#5ED0BA"
+                                                    Foreground="White"
+                                                    FontSize="12"
+                                                    FontWeight="SemiBold"
+                                                    Padding="12,6"
+                                                    BorderThickness="0"
+                                                    Cursor="Hand"
+                                                    Click="CheckButton_Click"
+                                                    Tag="{Binding}"
+                                                    HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center">
+                                                <Button.Style>
+                                                    <Style TargetType="Button">
+                                                        <Setter Property="Template">
+                                                            <Setter.Value>
+                                                                <ControlTemplate TargetType="Button">
+                                                                    <Border Background="{TemplateBinding Background}"
+                                                                            CornerRadius="8"
+                                                                            Padding="{TemplateBinding Padding}">
+                                                                        <ContentPresenter HorizontalAlignment="Center"
+                                                                                          VerticalAlignment="Center"/>
+                                                                    </Border>
+                                                                </ControlTemplate>
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                        <Style.Triggers>
+                                                            <Trigger Property="IsMouseOver" Value="True">
+                                                                <Setter Property="Background" Value="#4DB89E"/>
+                                                            </Trigger>
+                                                            <Trigger Property="IsEnabled" Value="False">
+                                                                <Setter Property="Background" Value="#CCCCCC"/>
+                                                                <Setter Property="Cursor" Value="Arrow"/>
+                                                            </Trigger>
+                                                            <DataTrigger Binding="{Binding Status}" Value="red">
+                                                                <Setter Property="IsEnabled" Value="False"/>
+                                                                <Setter Property="Content">
+                                                                    <Setter.Value>
+                                                                        <StackPanel Orientation="Horizontal">
+                                                                            <TextBlock Text="Не сдано"/>
+                                                                        </StackPanel>
+                                                                    </Setter.Value>
+                                                                </Setter>
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding Status}" Value="green">
+                                                                <Setter Property="Background" Value="#66BB6A"/>
+                                                                <Setter Property="Content" Value="Проверено"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Button.Style>
+                                            </Button>
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </Grid>
+                </ScrollViewer>
+            </Grid>
+        </Border>
+    </Grid>
+</Page>

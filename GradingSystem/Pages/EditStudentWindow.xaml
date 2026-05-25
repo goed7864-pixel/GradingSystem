@@ -1,0 +1,61 @@
+<Window x:Class="GradingSystem.Pages.EditStudentWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="Редактировать студента"
+        Height="550"
+        Width="550"
+        Style="{StaticResource DialogWindow}">
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Styles/windowStyles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Grid>
+        <Border Style="{StaticResource DialogContentBorder}">
+            <StackPanel>
+                <TextBlock Text="Редактирование студента" Style="{StaticResource DialogTitle}"/>
+
+                <TextBlock Text="Полное имя (Фамилия Имя Отчество)" Style="{StaticResource DialogLabel}"/>
+                <TextBox x:Name="FullNameTextBox" Style="{StaticResource DialogTextBox}"/>
+
+                <TextBlock Text="Email" Style="{StaticResource DialogLabel}"/>
+                <TextBox x:Name="EmailTextBox" Style="{StaticResource DialogTextBox}"/>
+
+                <TextBlock Text="Группа" Style="{StaticResource DialogLabel}"/>
+                <ComboBox x:Name="GroupComboBox"
+                          Height="50"
+                          FontSize="15"
+                          Padding="15,0"
+                          Margin="0,0,0,25"
+                          VerticalContentAlignment="Center"/>
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="10"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Button x:Name="CancelButton"
+                            Grid.Column="0"
+                            Content="Отмена"
+                            Style="{StaticResource DialogCancelButton}"
+                            Click="CancelButton_Click"/>
+
+                    <Button x:Name="SaveButton"
+                            Grid.Column="2"
+                            Content="Сохранить"
+                            Style="{StaticResource DialogSaveButton}"
+                            Click="SaveButton_Click"/>
+                </Grid>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Window>

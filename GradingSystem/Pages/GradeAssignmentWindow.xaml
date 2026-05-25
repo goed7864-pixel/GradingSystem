@@ -1,0 +1,148 @@
+<Window x:Class="GradingSystem.Pages.GradeAssignmentWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="Проверка задания"
+        Height="700"
+        Width="650"
+        Style="{StaticResource DialogWindow}">
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Styles/windowStyles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Grid>
+        <Border Style="{StaticResource DialogContentBorder}">
+            <StackPanel>
+                <TextBlock Text="Проверка домашнего задания" Style="{StaticResource DialogTitle}"/>
+
+                <!-- Информация о студенте -->
+                <Border Background="#F5F5F5" CornerRadius="10" Padding="15" Margin="0,0,0,20">
+                    <StackPanel>
+                        <TextBlock x:Name="StudentNameText" Text="Студент: " FontSize="14" FontWeight="SemiBold" Foreground="#2C3E50"/>
+                        <TextBlock x:Name="AssignmentTitleText" Text="Задание: " FontSize="13" Foreground="#666" Margin="0,5,0,0"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Ответ студента -->
+                <TextBlock Text="Файл работы" Style="{StaticResource DialogLabel}"/>
+                <Border Background="#FAFAFA" CornerRadius="10" Padding="15" Margin="0,0,0,20">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                            <TextBlock x:Name="FileNameText"
+                                       Text="Файл не загружен"
+                                       FontSize="13"
+                                       Foreground="#333"
+                                       FontWeight="SemiBold"/>
+                            <TextBlock x:Name="FileSizeText"
+                                       Text=""
+                                       FontSize="11"
+                                       Foreground="#999"
+                                       Margin="0,3,0,0"/>
+                        </StackPanel>
+
+                        <Button x:Name="DownloadButton"
+                                Grid.Column="1"
+                                Content="📥 Скачать"
+                                Background="#4CAF50"
+                                Foreground="White"
+                                FontSize="13"
+                                FontWeight="SemiBold"
+                                Padding="15,8"
+                                BorderThickness="0"
+                                Cursor="Hand"
+                                Click="DownloadButton_Click">
+                            <Button.Style>
+                                <Style TargetType="Button">
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="Button">
+                                                <Border Background="{TemplateBinding Background}"
+                                                        CornerRadius="8"
+                                                        Padding="{TemplateBinding Padding}">
+                                                    <ContentPresenter HorizontalAlignment="Center"
+                                                                      VerticalAlignment="Center"/>
+                                                </Border>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="#45A049"/>
+                                        </Trigger>
+                                        <Trigger Property="IsEnabled" Value="False">
+                                            <Setter Property="Background" Value="#CCCCCC"/>
+                                            <Setter Property="Cursor" Value="Arrow"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                        </Button>
+                    </Grid>
+                </Border>
+
+                <!-- Оценка -->
+                <TextBlock Text="Оценка (баллы)" Style="{StaticResource DialogLabel}"/>
+                <Grid Margin="0,0,0,20">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBox x:Name="GradeTextBox"
+                             Grid.Column="0"
+                             Style="{StaticResource DialogTextBox}"
+                             Margin="0"/>
+                    <TextBlock x:Name="MaxGradeText"
+                               Grid.Column="1"
+                               Text="/ 100"
+                               FontSize="15"
+                               Foreground="#7D7D88"
+                               VerticalAlignment="Center"
+                               Margin="10,0,0,25"/>
+                </Grid>
+
+                <!-- Комментарий -->
+                <TextBlock Text="Комментарий (необязательно)" Style="{StaticResource DialogLabel}"/>
+                <TextBox x:Name="CommentTextBox"
+                         Height="80"
+                         TextWrapping="Wrap"
+                         AcceptsReturn="True"
+                         VerticalScrollBarVisibility="Auto"
+                         Style="{StaticResource DialogTextBox}"
+                         VerticalContentAlignment="Top"
+                         Padding="15,10"/>
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="10"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Button x:Name="CancelButton"
+                            Grid.Column="0"
+                            Content="Отмена"
+                            Style="{StaticResource DialogCancelButton}"
+                            Click="CancelButton_Click"/>
+
+                    <Button x:Name="SaveButton"
+                            Grid.Column="2"
+                            Content="Сохранить оценку"
+                            Style="{StaticResource DialogSaveButton}"
+                            Click="SaveButton_Click"/>
+                </Grid>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Window>

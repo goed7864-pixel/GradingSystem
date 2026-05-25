@@ -1,0 +1,173 @@
+<Window x:Class="GradingSystem.Pages.ManageUsersWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Управление пользователями" Height="600" Width="900"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="CanResize"
+        Background="#F5F5F5">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Border Grid.Row="0" Background="White" Padding="25" BorderBrush="#EEEEEE" BorderThickness="0,0,0,1">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0">
+                    <TextBlock Text="Управление пользователями" FontSize="22" FontWeight="Bold" Foreground="#2C3E50"/>
+                    <TextBlock x:Name="UsersCountText" Text="0 пользователей" FontSize="13" Foreground="Gray" Margin="0,5,0,0"/>
+                </StackPanel>
+                <Button Grid.Column="1" x:Name="AddUserButton" Height="40" Padding="15,0" Background="#5ED0BA" BorderThickness="0" Cursor="Hand" Click="AddUserButton_Click" ToolTip="Добавить пользователя">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="+" FontSize="18" Margin="0,0,8,0" Foreground="White"/>
+                        <TextBlock Text="Добавить" FontSize="13" FontWeight="SemiBold" Foreground="White"/>
+                    </StackPanel>
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border x:Name="border" Background="{TemplateBinding Background}" CornerRadius="10">
+                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter TargetName="border" Property="Background" Value="#4DB8A3"/>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </Button.Style>
+                </Button>
+            </Grid>
+        </Border>
+
+        <Grid Grid.Row="1" Margin="25">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Border Grid.Row="0" Background="White" Padding="15" Margin="0,0,0,15" CornerRadius="10">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="🔍" FontSize="16" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                    <TextBox x:Name="SearchBox" Grid.Column="1" Background="Transparent" BorderThickness="0" FontSize="13" VerticalAlignment="Center" TextChanged="SearchBox_TextChanged">
+                        <TextBox.Style>
+                            <Style TargetType="TextBox">
+                                <Setter Property="Foreground" Value="#333"/>
+                                <Style.Triggers>
+                                    <Trigger Property="Text" Value="">
+                                        <Setter Property="Background">
+                                            <Setter.Value>
+                                                <VisualBrush Stretch="None" AlignmentX="Left">
+                                                    <VisualBrush.Visual>
+                                                        <TextBlock Text="Поиск по имени или email..." Foreground="#999" FontSize="13"/>
+                                                    </VisualBrush.Visual>
+                                                </VisualBrush>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBox.Style>
+                    </TextBox>
+                    <ComboBox x:Name="RoleFilterComboBox" Grid.Column="2" Width="150" Height="35" Padding="10,0" FontSize="13" BorderBrush="#DDD" BorderThickness="1" SelectionChanged="RoleFilterComboBox_SelectionChanged">
+                        <ComboBoxItem Content="Все роли" Tag="all" IsSelected="True"/>
+                        <ComboBoxItem Content="Студенты" Tag="student"/>
+                        <ComboBoxItem Content="Преподаватели" Tag="teacher"/>
+                    </ComboBox>
+                </Grid>
+            </Border>
+
+            <Border Grid.Row="1" Background="White" CornerRadius="10" Padding="0">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <ItemsControl x:Name="UsersList">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Border Background="Transparent" Padding="20,15" BorderBrush="#EEEEEE" BorderThickness="0,0,0,1">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <Border Grid.Column="0" Width="50" Height="50" Background="{Binding AvatarColor}" CornerRadius="25" Margin="0,0,15,0">
+                                            <TextBlock Text="{Binding Initials}" FontSize="18" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </Border>
+
+                                        <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                            <TextBlock Text="{Binding FullName}" FontSize="14" FontWeight="SemiBold" Foreground="#2C3E50"/>
+                                            <TextBlock Text="{Binding Email}" FontSize="12" Foreground="Gray" Margin="0,3,0,0"/>
+                                        </StackPanel>
+
+                                        <Border Grid.Column="2" Background="{Binding RoleColor}" CornerRadius="10" Padding="10,5" VerticalAlignment="Center" Margin="10,0">
+                                            <TextBlock Text="{Binding RoleText}" FontSize="11" Foreground="White" FontWeight="SemiBold"/>
+                                        </Border>
+
+                                        <Button Grid.Column="3" Width="36" Height="36" Background="Transparent" BorderThickness="0" Cursor="Hand" Click="EditUserButton_Click" Tag="{Binding Id}" ToolTip="Редактировать" Margin="5,0">
+                                            <Button.Style>
+                                                <Style TargetType="Button">
+                                                    <Setter Property="Template">
+                                                        <Setter.Value>
+                                                            <ControlTemplate TargetType="Button">
+                                                                <Border x:Name="border" Background="{TemplateBinding Background}" CornerRadius="8" Padding="8">
+                                                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                                </Border>
+                                                                <ControlTemplate.Triggers>
+                                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                                        <Setter TargetName="border" Property="Background" Value="#E0E0E0"/>
+                                                                    </Trigger>
+                                                                </ControlTemplate.Triggers>
+                                                            </ControlTemplate>
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </Style>
+                                            </Button.Style>
+                                            <TextBlock Text="✏️" FontSize="16"/>
+                                        </Button>
+
+                                        <Button Grid.Column="4" Width="36" Height="36" Background="Transparent" BorderThickness="0" Cursor="Hand" Click="DeleteUserButton_Click" Tag="{Binding Id}" ToolTip="Удалить">
+                                            <Button.Style>
+                                                <Style TargetType="Button">
+                                                    <Setter Property="Template">
+                                                        <Setter.Value>
+                                                            <ControlTemplate TargetType="Button">
+                                                                <Border x:Name="border" Background="{TemplateBinding Background}" CornerRadius="8" Padding="8">
+                                                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                                </Border>
+                                                                <ControlTemplate.Triggers>
+                                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                                        <Setter TargetName="border" Property="Background" Value="#FFCDD2"/>
+                                                                    </Trigger>
+                                                                </ControlTemplate.Triggers>
+                                                            </ControlTemplate>
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </Style>
+                                            </Button.Style>
+                                            <TextBlock Text="🗑️" FontSize="16"/>
+                                        </Button>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+            </Border>
+        </Grid>
+    </Grid>
+</Window>
